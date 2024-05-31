@@ -677,7 +677,7 @@ export default function Dashboard() {
                               id="category"
                               aria-label="Select category"
                             >
-                              <SelectValue placeholder="Select category" />
+                              <SelectValue placeholder="选择类目" />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="clothing">活动</SelectItem>
@@ -691,11 +691,8 @@ export default function Dashboard() {
                         <div className="grid gap-3">
                           <Label htmlFor="subcategory">子分类（可选）</Label>
                           <Select>
-                            <SelectTrigger
-                              id="subcategory"
-                              aria-label="Select subcategory"
-                            >
-                              <SelectValue placeholder="Select subcategory" />
+                            <SelectTrigger id="subcategory">
+                              <SelectValue placeholder="选择子类目" />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="t-shirtsa">
