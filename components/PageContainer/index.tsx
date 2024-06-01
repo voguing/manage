@@ -37,40 +37,92 @@ import {
 } from "@/components/ui/tooltip";
 import clsx from "clsx";
 
-export const PageContainer = ({ children }: any) => {
-  const currentRoute = "/products/publish";
-  const menu = [
-    {
-      title: "首页",
-      href: "/",
-      secendaryLinks: [],
-      icon: Home,
-    },
-    {
-      title: "订单列表",
-      href: "/orders",
-      secendaryLinks: [],
-      icon: ShoppingCart,
-    },
-    {
-      title: "商品列表",
-      href: "/products",
-      secendaryLinks: ["/products/publish"],
-      icon: Package,
-    },
-    {
-      title: "用户",
-      href: "/users",
-      secendaryLinks: [],
-      icon: Users2,
-    },
-    {
-      title: "数据",
-      href: "/analytics",
-      secendaryLinks: [],
-      icon: LineChart,
-    },
-  ];
+const menu = [
+  {
+    title: "首页",
+    href: "/",
+    secendaryLinks: [],
+    icon: Home,
+  },
+  {
+    title: "订单列表",
+    href: "/orders",
+    secendaryLinks: [],
+    icon: ShoppingCart,
+  },
+  {
+    title: "商品列表",
+    href: "/products",
+    secendaryLinks: [
+      {
+        title: "发布商品",
+        href: "/products/publish",
+      },
+    ],
+    icon: Package,
+  },
+  {
+    title: "用户",
+    href: "/users",
+    secendaryLinks: [],
+    icon: Users2,
+  },
+  {
+    title: "数据",
+    href: "/analytics",
+    secendaryLinks: [],
+    icon: LineChart,
+  },
+];
+
+const routeMapper: Record<
+  string,
+  (typeof menu)[number] & {
+    parent?: (typeof menu)[number];
+  }
+> = menu.reduce((previous, current) => {
+  const currentItem: Record<string, any> = {};
+  currentItem[current.href] = current;
+  current?.secendaryLinks?.forEach((secondaryItem: any) => {
+    currentItem[secondaryItem.href] = {
+      ...secondaryItem,
+      parent: {
+        ...current,
+      },
+    };
+  });
+  return {
+    ...previous,
+    ...currentItem,
+  };
+}, {});
+
+export const PageContainer = ({
+  children,
+  current,
+}: {
+  children?: React.ReactNode;
+  current: string;
+}) => {
+  const currentRoute = routeMapper[current];
+  const breadcrumbs = currentRoute.parent ? (
+    <Breadcrumb className="hidden md:flex">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href={currentRoute.parent.href}>
+              {currentRoute.parent.title}
+            </Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{currentRoute.title}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  ) : null;
+
   return (
     <TooltipProvider>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -91,8 +143,10 @@ export const PageContainer = ({ children }: any) => {
                       href={href}
                       className={clsx(
                         "flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8",
-                        currentRoute === href ||
-                          secendaryLinks.includes(currentRoute)
+                        current === href ||
+                          secendaryLinks
+                            .map((item) => item.href)
+                            .includes(current)
                           ? "bg-accent text-accent-foreground"
                           : "text-muted-foreground"
                       )}
@@ -146,7 +200,7 @@ export const PageContainer = ({ children }: any) => {
             </DropdownMenu>
           </nav>
         </aside>
-        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+        <div className="flex flex-col gap-2 sm:gap-0 sm:py-4 sm:pl-14">
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
             <Sheet>
               <SheetTrigger asChild>
@@ -202,21 +256,11 @@ export const PageContainer = ({ children }: any) => {
                 </nav>
               </SheetContent>
             </Sheet>
-            <Breadcrumb className="hidden md:flex">
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="#">商品列表</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>发布商品</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
           </header>
-          {children}
+          <main className="grid flex-1 items-start justify-start gap-2 p-2 sm:px-6 sm:py-0 w-full mx-auto max-w-[59rem] xl:min-w-[59rem]">
+            {breadcrumbs}
+            <div>{children}</div>
+          </main>
         </div>
       </div>
     </TooltipProvider>
