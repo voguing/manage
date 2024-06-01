@@ -292,7 +292,7 @@ export default function Dashboard() {
                     <CardHeader>
                       <CardTitle>商品详情</CardTitle>
                       <CardDescription>
-                        Lipsum dolor sit amet, consectetur adipiscing elit
+                        请填写商品的基础信息，所填写的内容会展示在商品的首页。
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -303,15 +303,15 @@ export default function Dashboard() {
                             id="name"
                             type="text"
                             className="w-full"
-                            defaultValue="Gamer Gear Pro Controller"
+                            placeholder="请输入"
                           />
                         </div>
                         <div className="grid gap-3">
                           <Label htmlFor="description">商品描述</Label>
                           <Textarea
                             id="description"
-                            defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nunc nisl nec nunc."
                             className="min-h-32"
+                            placeholder="请输入"
                           />
                         </div>
                       </div>
@@ -320,6 +320,9 @@ export default function Dashboard() {
                   <Card x-chunk="dashboard-07-chunk-2">
                     <CardHeader>
                       <CardTitle>商品分类</CardTitle>
+                      <CardDescription>
+                        商品分类会影响商品在前台的展示，请确保填写正确。
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="grid gap-6 sm:grid-cols-3">
@@ -330,14 +333,12 @@ export default function Dashboard() {
                               id="category"
                               aria-label="Select category"
                             >
-                              <SelectValue placeholder="选择类目" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="clothing">活动</SelectItem>
                               <SelectItem value="electronics">酒水</SelectItem>
-                              {/* <SelectItem value="accessories">
-                                Accessories
-                              </SelectItem> */}
+                              <SelectItem value="course">课程</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -345,7 +346,7 @@ export default function Dashboard() {
                           <Label htmlFor="subcategory">子分类（可选）</Label>
                           <Select>
                             <SelectTrigger id="subcategory">
-                              <SelectValue placeholder="选择子类目" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="t-shirtsa">
@@ -365,7 +366,7 @@ export default function Dashboard() {
                     <CardHeader>
                       <CardTitle>库存</CardTitle>
                       <CardDescription>
-                        Lipsum dolor sit amet, consectetur adipiscing elit
+                        编辑商品的 SKU 信息，请在填写前确保商品类型已正确填写。
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -377,13 +378,15 @@ export default function Dashboard() {
                             </TableHead>
                             <TableHead>库存</TableHead>
                             <TableHead>价格</TableHead>
-                            <TableHead className="w-[100px]">个数</TableHead>
+                            <TableHead className="w-[100px]">
+                              包含人数
+                            </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           <TableRow>
                             <TableCell className="font-semibold">
-                              GGPC-001
+                              早鸟票
                             </TableCell>
                             <TableCell>
                               <Label htmlFor="stock-1" className="sr-only">
@@ -419,7 +422,7 @@ export default function Dashboard() {
                           </TableRow>
                           <TableRow>
                             <TableCell className="font-semibold">
-                              GGPC-002
+                              单人预约
                             </TableCell>
                             <TableCell>
                               <Label htmlFor="stock-2" className="sr-only">
@@ -455,7 +458,7 @@ export default function Dashboard() {
                           </TableRow>
                           <TableRow>
                             <TableCell className="font-semibold">
-                              GGPC-003
+                              双人预约
                             </TableCell>
                             <TableCell>
                               <Label htmlFor="stock-3" className="sr-only">
@@ -501,20 +504,20 @@ export default function Dashboard() {
                   </Card>
                 </div>
                 <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                  <Card x-chunk="dashboard-07-chunk-3">
+                  <Card x-chunk="dashboard-07-chunk-5">
                     <CardHeader>
                       <CardTitle>商品状态</CardTitle>
+                      <CardDescription>
+                        展示商品状态，可点击按钮对状态进行修改
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid gap-6">
+                      <div className="grid gap-4">
                         <div className="grid gap-3">
-                          <Label htmlFor="status">售卖状态</Label>
-                          <Select>
-                            <SelectTrigger
-                              id="status"
-                              aria-label="Select status"
-                            >
-                              <SelectValue placeholder="Select status" />
+                          <Label htmlFor="status">当前状态</Label>
+                          <Select disabled>
+                            <SelectTrigger id="status">
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="draft">草稿态</SelectItem>
@@ -523,6 +526,9 @@ export default function Dashboard() {
                             </SelectContent>
                           </Select>
                         </div>
+                        <Button size="sm" variant="secondary">
+                          下架商品
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -570,20 +576,6 @@ export default function Dashboard() {
                           </button>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                  <Card x-chunk="dashboard-07-chunk-5">
-                    <CardHeader>
-                      <CardTitle>Archive Product</CardTitle>
-                      <CardDescription>
-                        Lipsum dolor sit amet, consectetur adipiscing elit.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div></div>
-                      <Button size="sm" variant="secondary">
-                        Archive Product
-                      </Button>
                     </CardContent>
                   </Card>
                 </div>
