@@ -100,9 +100,11 @@ const routeMapper: Record<
 export const PageContainer = ({
   children,
   current,
+  type,
 }: {
   children?: React.ReactNode;
   current: string;
+  type?: "default" | "publish";
 }) => {
   const currentRoute = routeMapper[current];
   const breadcrumbs = currentRoute.parent ? (
@@ -209,8 +211,8 @@ export const PageContainer = ({
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="sm:max-w-xs">
-                <nav className="grid gap-6 text-lg font-medium">
+              <SheetContent side="top" className="sm:max-w-xs">
+                <nav className="grid gap-4 text-base font-medium">
                   <Link
                     href="#"
                     className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
@@ -218,46 +220,37 @@ export const PageContainer = ({
                     <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
                     <span className="sr-only">Acme Inc</span>
                   </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Home className="h-5 w-5" />
-                    首页
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <ShoppingCart className="h-5 w-5" />
-                    订单列表
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-foreground"
-                  >
-                    <Package className="h-5 w-5" />
-                    商品列表
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Users2 className="h-5 w-5" />
-                    用户
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <LineChart className="h-5 w-5" />
-                    设置
-                  </Link>
+                  {menu.map(
+                    ({ href, title, icon: Icon, secendaryLinks }, index) => {
+                      return (
+                        <Link
+                          key={index}
+                          href={href}
+                          className={clsx(
+                            "flex items-center gap-4 px-2.5",
+                            current === href ||
+                              secendaryLinks
+                                .map((item) => item.href)
+                                .includes(current)
+                              ? "text-foreground"
+                              : "text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          <Icon className="h-4 w-4" />
+                          {title}
+                        </Link>
+                      );
+                    }
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>
           </header>
-          <main className="grid flex-1 items-start justify-start gap-2 p-2 sm:px-6 sm:py-0 w-full mx-auto max-w-[59rem] xl:min-w-[59rem]">
+          <main
+            className={clsx(
+              "grid flex-1 items-start gap-2 p-2 sm:px-6 sm:py-0 w-full mx-auto max-w-[59rem] xl:min-w-[59rem]"
+            )}
+          >
             {breadcrumbs}
             <div>{children}</div>
           </main>

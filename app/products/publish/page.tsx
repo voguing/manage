@@ -34,7 +34,7 @@ import { PageContainer } from "@/components/PageContainer";
 
 export default function Dashboard() {
   return (
-    <PageContainer current="/products/publish">
+    <PageContainer current="/products/publish" type="publish">
       <div className="grid flex-1 gap-4 auto-rows-max">
         <div className="flex items-center gap-4">
           <Button variant="outline" size="icon" className="h-7 w-7">
