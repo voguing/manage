@@ -15,7 +15,7 @@ const Page = () => {
           </Link>
         </div>
         <QueryTable
-          dataSource={[{}]}
+          dataSource={[{}, {}]}
           columns={[
             { title: "商品名称", dataIndex: "name", render: () => "春游" },
             { title: "价格", dataIndex: "price", render: () => "100" },
