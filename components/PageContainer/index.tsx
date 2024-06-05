@@ -44,12 +44,12 @@ const menu = [
     secendaryLinks: [],
     icon: Home,
   },
-  {
-    title: "订单列表",
-    href: "/orders",
-    secendaryLinks: [],
-    icon: ShoppingCart,
-  },
+  // {
+  //   title: "订单列表",
+  //   href: "/orders",
+  //   secendaryLinks: [],
+  //   icon: ShoppingCart,
+  // },
   {
     title: "商品列表",
     href: "/products",
@@ -67,12 +67,12 @@ const menu = [
     secendaryLinks: [],
     icon: Users2,
   },
-  {
-    title: "数据",
-    href: "/analytics",
-    secendaryLinks: [],
-    icon: LineChart,
-  },
+  // {
+  //   title: "数据",
+  //   href: "/analytics",
+  //   secendaryLinks: [],
+  //   icon: LineChart,
+  // },
 ];
 
 const routeMapper: Record<
