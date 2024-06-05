@@ -108,7 +108,7 @@ export const PageContainer = ({
 }) => {
   const currentRoute = routeMapper[current];
   const breadcrumbs = currentRoute.parent ? (
-    <Breadcrumb className="hidden md:flex">
+    <Breadcrumb className="mb-2 hidden md:flex">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
@@ -182,13 +182,13 @@ export const PageContainer = ({
                   size="icon"
                   className="overflow-hidden rounded-full"
                 >
-                  <Image
+                  {/* <Image
                     src="/placeholder-user.jpg"
                     width={36}
                     height={36}
                     alt="Avatar"
                     className="overflow-hidden rounded-full"
-                  />
+                  /> */}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -248,7 +248,7 @@ export const PageContainer = ({
           </header>
           <main
             className={clsx(
-              "grid flex-1 items-start gap-2 p-2 sm:px-6 sm:py-0 w-full mx-auto max-w-[59rem] xl:min-w-[59rem]"
+              "p-2 sm:px-6 sm:py-0 w-full mx-auto max-w-[59rem] xl:min-w-[59rem]"
             )}
           >
             {breadcrumbs}

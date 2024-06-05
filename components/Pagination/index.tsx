@@ -15,11 +15,14 @@ export type PaginationProps = {
 export const Pagination = ({ total }: PaginationProps) => (
   <PaginationComponent>
     <PaginationContent>
-      {total !== undefined && <PaginationItem>总共 {total} 条</PaginationItem>}
+      {total !== undefined && (
+        <PaginationItem className="mr-2">总共 {total} 条</PaginationItem>
+      )}
       <PaginationItem>
         <PaginationPrevious />
       </PaginationItem>
       <PaginationItem>
+        {/* className="w-auto px-2" */}
         <PaginationLink>1</PaginationLink>
       </PaginationItem>
       {/* <PaginationItem>

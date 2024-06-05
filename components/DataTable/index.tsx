@@ -6,17 +6,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Spin } from "antd";
 import clsx from "clsx";
+import dayjs from "dayjs";
 
 export type DataTableProps<
   DataType extends Record<any, any> = Record<any, any>
 > = {
   dataSource?: Array<DataType>;
+  loading?: boolean;
   columns?: Array<{
     title?: string;
     className?: string;
     dataIndex?: string;
     width?: number;
+    valueType?: "date";
     render?: (value: any, record: DataType, index: number) => React.ReactNode;
   }>;
 };
@@ -24,9 +28,9 @@ export type DataTableProps<
 const DataTable = <DataType extends Record<any, any>>(
   props: DataTableProps<DataType>
 ) => {
-  const { columns = [], dataSource = [] } = props;
+  const { columns = [], dataSource = [], loading } = props;
 
-  return (
+  const table = (
     <Table>
       <TableHeader>
         <TableRow>
@@ -45,16 +49,29 @@ const DataTable = <DataType extends Record<any, any>>(
           return (
             <TableRow key={index}>
               {columns.map((column, index) => {
-                const { dataIndex, render, width, className, ...rest } = column;
+                const {
+                  dataIndex,
+                  render,
+                  width,
+                  className,
+                  valueType,
+                  ...rest
+                } = column;
                 const value = dataIndex ? record[dataIndex] : undefined;
+                let renderValue;
+                if (valueType === "date" && value) {
+                  renderValue = dayjs(value).format("YYYY-MM-DD HH:mm:ss");
+                }
                 return (
                   <TableCell
                     key={index}
                     className={clsx(className, "min-w-[100px]")}
                     {...rest}
                   >
-                    <div style={{ width }}>
-                      {render ? render(value, record, index) : value || "-"}
+                    <div>
+                      {render
+                        ? render(value, record, index)
+                        : (renderValue ?? value) || "-"}
                     </div>
                   </TableCell>
                 );
@@ -64,6 +81,12 @@ const DataTable = <DataType extends Record<any, any>>(
         })}
       </TableBody>
     </Table>
+  );
+
+  return loading ? (
+    <div className="flex items-center justify-center h-24">加载中</div>
+  ) : (
+    table
   );
 };
 
