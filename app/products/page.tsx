@@ -1,7 +1,7 @@
 "use client";
 
+import DataTable from "@/components/DataTable";
 import { PageContainer } from "@/components/PageContainer";
-import { QueryTable } from "@/components/QueryTable";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -14,7 +14,7 @@ const Page = () => {
             <Button size="sm">发布商品</Button>
           </Link>
         </div>
-        <QueryTable
+        <DataTable
           dataSource={[{}, {}]}
           columns={[
             { title: "商品名称", dataIndex: "name", render: () => "春游" },

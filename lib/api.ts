@@ -1,5 +1,5 @@
 import { GraphQLClient, gql } from "graphql-request";
-import useSwr from "swr";
+import useSwr, { SWRResponse } from "swr";
 import { message } from "antd";
 
 const client = new GraphQLClient("http://localhost:4000/graphql");
@@ -22,7 +22,7 @@ const request =
 
 const api = {
   request,
-  useSwr: (apiKey: string) => {
+  useSwr: (apiKey: string): SWRResponse<any, any, any> => {
     return useSwr(apiKey, (api as any)[apiKey]);
   },
   users: request<any>(`
