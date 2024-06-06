@@ -107,13 +107,13 @@ export const PageContainer = ({
   type?: "default" | "publish";
 }) => {
   const currentRoute = routeMapper[current];
-  const breadcrumbs = currentRoute.parent ? (
+  const breadcrumbs = currentRoute?.parent ? (
     <Breadcrumb className="mb-2 hidden md:flex">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link href={currentRoute.parent.href}>
-              {currentRoute.parent.title}
+              {currentRoute?.parent?.title}
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
