@@ -37,6 +37,7 @@ import { PageContainer } from "@/components/PageContainer";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Product, Status } from "../types";
+import { Title } from "@/components/Title";
 
 async function getData(): Promise<Product[]> {
   // Fetch data from your API here.
@@ -86,17 +87,15 @@ const Page = async () => {
   return (
     <PageContainer current="/products">
       <div className="flex gap-4 flex-col">
-        <div className="flex justify-end">
-          <Link href="/products/publish">
-            <Button size="sm">发布商品</Button>
-          </Link>
-        </div>
-        {/* <DataTable
-          dataSource={[{}, {}]}
-          columns={[
-          ]}
-        /> */}
-        <DataTable columns={columns} data={data} rowSelection />
+        <Title
+          title="商品列表"
+          extra={
+            <Link href="/products/publish">
+              <Button size="sm">发布商品</Button>
+            </Link>
+          }
+        />
+        <DataTable columns={columns} data={data} />
       </div>
     </PageContainer>
   );

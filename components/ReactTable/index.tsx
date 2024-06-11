@@ -25,12 +25,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   rowSelection?: boolean;
+  className?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   rowSelection: propsRowSelection,
+  className,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
@@ -71,7 +73,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className={className}>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -120,10 +122,10 @@ export function DataTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
-        </Table>
+        </Table> 
       </div>
       <div className="mt-4">
-        <DataTablePagination table={table} />
+        <DataTablePagination rowSelection={propsRowSelection} table={table} />
       </div>
     </div>
   );

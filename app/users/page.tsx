@@ -1,47 +1,49 @@
 "use client";
 
 import { PageContainer } from "@/components/PageContainer";
-import { QueryTable } from "@/components/QueryTable";
+import { DataTable } from "@/components/ReactTable";
+import { Title } from "@/components/Title";
 
 const Page = () => {
   return (
     <PageContainer current="/users">
-      <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0 mb-4">
-        春日华尔兹
-      </h1>
-      <QueryTable
-        api="users"
+      <Title title="用户列表" />
+      <DataTable
+        // api="users"
+        className="mt-4"
+        data={[
+          {
+            id: 1,
+            name: "刘海峰",
+            username: "leo",
+            phone: "13042005339",
+            createdAt: "2024-08-08 11:11:12",
+          },
+        ]}
         columns={[
           {
-            title: "ID",
-            dataIndex: "id",
-            width: 40,
+            header: "ID",
+            accessorKey: "id",
           },
           {
-            title: "姓名",
-            dataIndex: "name",
-            width: 60,
+            header: "姓名",
+            accessorKey: "name",
           },
           {
-            title: "用户名",
-            dataIndex: "username",
-            width: 60,
+            header: "用户名",
+            accessorKey: "username",
           },
           {
-            title: "电话",
-            dataIndex: "phone",
-            width: 60,
+            header: "电话",
+            accessorKey: "phone",
           },
           {
-            title: "注册时间",
-            dataIndex: "createdAt",
-            valueType: "date",
-            width: 60,
+            header: "注册时间",
+            accessorKey: "createdAt",
           },
           {
-            title: "头像",
-            dataIndex: "avatar",
-            width: 60,
+            header: "头像",
+            accessorKey: "avatar",
           },
         ]}
       />

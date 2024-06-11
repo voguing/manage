@@ -38,12 +38,12 @@ import {
 import clsx from "clsx";
 
 const menu = [
-  {
-    title: "首页",
-    href: "/",
-    secendaryLinks: [],
-    icon: Home,
-  },
+  // {
+  //   title: "首页",
+  //   href: "/",
+  //   secendaryLinks: [],
+  //   icon: Home,
+  // },
   // {
   //   title: "订单列表",
   //   href: "/orders",
