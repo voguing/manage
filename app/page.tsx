@@ -1,4 +1,4 @@
-import { PageContainer } from "@/components/PageContainer";
+import { PageContainer } from "@/app/page-container";
 import { redirect } from "next/navigation";
 
 export default function Dashboard() {

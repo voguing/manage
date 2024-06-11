@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { PageContainer } from "@/components/PageContainer";
+import { PageContainer } from "@/app/page-container";
 import Link from "next/link";
 import { Card } from "@/components/Card";
 import { Title } from "@/components/Title";

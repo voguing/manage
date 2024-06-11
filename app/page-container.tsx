@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   Home,
   LineChart,
+  MessageCircle,
   Package,
   Package2,
   PanelLeft,
@@ -60,6 +61,12 @@ const menu = [
     href: "/orders",
     secendaryLinks: [],
     icon: ShoppingCart,
+  },
+  {
+    title: "触达中心",
+    href: "/notice",
+    secendaryLinks: [],
+    icon: MessageCircle,
   },
   {
     title: "用户",

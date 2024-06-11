@@ -1,6 +1,6 @@
 "use client";
 
-import { PageContainer } from "@/components/PageContainer";
+import { PageContainer } from "@/app/page-container";
 import { DataTable } from "@/components/ReactTable";
 import { Title } from "@/components/Title";
 

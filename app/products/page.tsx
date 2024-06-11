@@ -33,7 +33,7 @@
 
 import { DataTable } from "@/components/ReactTable";
 import { columns } from "./columns";
-import { PageContainer } from "@/components/PageContainer";
+import { PageContainer } from "@/app/page-container";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Product, Status } from "../types";
