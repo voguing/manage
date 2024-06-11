@@ -22,42 +22,35 @@ const Page = () => {
         className="mt-4"
         data={[{}]}
         columns={[
-          // paymentNo?: string;
-          // amount: number;
-          // status: string;
-          // user: User;
-          // userId: number;
+          // id: number;
+          // title: string;
           // createdAt: string;
-          // sku: Sku;
-          // skuId: number;
-          // notificationOrders: NotificationOrder[];
+          // notifications: Notification[];
+          // order?: Order;
+          // orderId?: number;
           {
-            header: "订单编号",
-            accessorKey: "orderNo",
+            header: "触达单编号",
+            accessorKey: "id",
           },
           {
-            header: "付款编号",
-            accessorKey: "paymentNo",
+            header: "触达单名称",
+            accessorKey: "title",
           },
           {
-            header: "订单状态",
-            accessorKey: "status",
-          },
-          {
-            header: "用户",
-            accessorKey: "userId",
+            header: "关联订单",
+            accessorKey: "orderId",
           },
           {
             header: "创建时间",
             accessorKey: "createdAt",
           },
           {
-            header: "商品名称",
-            // accessorKey: "orderNo",
+            header: "触达列表",
+            accessorKey: "notifications",
           },
           {
-            header: "sku 名称",
-            // accessorKey: "orderNo",
+            header: "触达状态",
+            accessorKey: "status",
           },
           {
             header: "操作",
@@ -74,9 +67,13 @@ const Page = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>操作</DropdownMenuLabel>
-                    <DropdownMenuItem>转交</DropdownMenuItem>
+                    <DropdownMenuItem>查看详情</DropdownMenuItem>
+                    <DropdownMenuItem>重新触达失败用户</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>导出成功名单</DropdownMenuItem>
+                    <DropdownMenuItem>导出失败名单</DropdownMenuItem>
                     {/* <DropdownMenuItem>编辑</DropdownMenuItem> */}
-                    {/* <DropdownMenuSeparator /> */}
+
                     {/* <DropdownMenuItem
                       onClick={() =>
                         navigator.clipboard.writeText("payment.id")
