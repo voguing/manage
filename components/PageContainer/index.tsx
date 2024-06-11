@@ -44,12 +44,6 @@ const menu = [
   //   secendaryLinks: [],
   //   icon: Home,
   // },
-  // {
-  //   title: "订单列表",
-  //   href: "/orders",
-  //   secendaryLinks: [],
-  //   icon: ShoppingCart,
-  // },
   {
     title: "商品列表",
     href: "/products",
@@ -60,6 +54,12 @@ const menu = [
       },
     ],
     icon: Package,
+  },
+  {
+    title: "订单管理",
+    href: "/orders",
+    secendaryLinks: [],
+    icon: ShoppingCart,
   },
   {
     title: "用户",

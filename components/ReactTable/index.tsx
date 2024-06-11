@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { useState } from "react";
 import { DataTablePagination } from "./components/Pagination";
@@ -122,7 +121,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
-        </Table> 
+        </Table>
       </div>
       <div className="mt-4">
         <DataTablePagination rowSelection={propsRowSelection} table={table} />

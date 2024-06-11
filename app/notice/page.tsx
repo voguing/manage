@@ -16,8 +16,8 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 
 const Page = () => {
   return (
-    <PageContainer current="/orders">
-      <Title title="订单管理" />
+    <PageContainer current="/notice">
+      <Title title="触达中心" />
       <DataTable
         className="mt-4"
         data={[{}]}
