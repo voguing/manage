@@ -68,7 +68,7 @@ const Page = () => {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>操作</DropdownMenuLabel>
                     <DropdownMenuItem>查看详情</DropdownMenuItem>
-                    <DropdownMenuItem>重新触达失败用户</DropdownMenuItem>
+                    <DropdownMenuItem>重新触达用户</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>导出成功名单</DropdownMenuItem>
                     <DropdownMenuItem>导出失败名单</DropdownMenuItem>

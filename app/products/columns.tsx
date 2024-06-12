@@ -13,6 +13,7 @@ import { Product, Status } from "../types";
 import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Badge, BadgeProps } from "@/components/ui/badge";
+import { ProductStatus } from "../components/ProductStatus";
 
 export const columns: ColumnDef<Product>[] = [
   { header: "商品名称", accessorKey: "title" },
@@ -25,22 +26,8 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "status",
     cell({ getValue }) {
       const value = getValue() as Status;
-      const mapper = {
-        DRAFT: {
-          variant: "outline",
-          children: "草稿",
-        },
-        ARCHIVED: {
-          variant: "secondary",
-          children: "已下架",
-        },
-        PUBLISHED: {
-          variant: "default",
-          children: "售卖中",
-        },
-      } as Record<Status, BadgeProps>;
-      const badgeProps = mapper[value as "DRAFT"];
-      return <Badge {...badgeProps} />;
+
+      return <ProductStatus value={value} />;
     },
   },
   { header: "创建时间", accessorKey: "createdAt" },
