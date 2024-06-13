@@ -33,6 +33,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ProFormField } from "@/app/components/ProFormField";
+import DataTable from "@/components/DataTable";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -107,128 +108,84 @@ export default function Dashboard() {
                 <Card
                   title="库存"
                   description="编辑商品的 SKU 信息，请在填写前确保商品类型已正确填写。"
-                  footerClassName="justify-center border-t p-4"
+                  extra={
+                    <Button type="button" variant="ghost" size="sm">
+                      选择模版
+                    </Button>
+                  }
+                  footerClassName="border-t pt-2"
                   footer={
-                    <Button size="sm" variant="ghost" className="gap-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="gap-1"
+                      type="button"
+                    >
                       <PlusCircle className="h-3.5 w-3.5" />
                       添加子商品
                     </Button>
                   }
                 >
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-[100px]">SKU 名称</TableHead>
-                        <TableHead>库存</TableHead>
-                        <TableHead>价格</TableHead>
-                        <TableHead className="w-[100px]">包含人数</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell className="font-semibold">早鸟票</TableCell>
-                        <TableCell>
-                          <Label htmlFor="stock-1" className="sr-only">
-                            Stock
-                          </Label>
-                          <Input
-                            id="stock-1"
-                            type="number"
-                            defaultValue="100"
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Label htmlFor="price-1" className="sr-only">
-                            Price
-                          </Label>
-                          <Input
-                            id="price-1"
-                            type="number"
-                            defaultValue="99.99"
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <ToggleGroup
-                            type="single"
-                            defaultValue="s"
-                            variant="outline"
-                          >
-                            <ToggleGroupItem value="1">1</ToggleGroupItem>
-                            <ToggleGroupItem value="2">2</ToggleGroupItem>
-                            <ToggleGroupItem value="3">3</ToggleGroupItem>
-                          </ToggleGroup>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-semibold">
-                          单人预约
-                        </TableCell>
-                        <TableCell>
-                          <Label htmlFor="stock-2" className="sr-only">
-                            Stock
-                          </Label>
-                          <Input
-                            id="stock-2"
-                            type="number"
-                            defaultValue="143"
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Label htmlFor="price-2" className="sr-only">
-                            Price
-                          </Label>
-                          <Input
-                            id="price-2"
-                            type="number"
-                            defaultValue="99.99"
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <ToggleGroup
-                            type="single"
-                            defaultValue="m"
-                            variant="outline"
-                          >
-                            <ToggleGroupItem value="1">1</ToggleGroupItem>
-                            <ToggleGroupItem value="2">2</ToggleGroupItem>
-                            <ToggleGroupItem value="3">3</ToggleGroupItem>
-                          </ToggleGroup>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-semibold">
-                          双人预约
-                        </TableCell>
-                        <TableCell>
-                          <Label htmlFor="stock-3" className="sr-only">
-                            Stock
-                          </Label>
-                          <Input id="stock-3" type="number" defaultValue="32" />
-                        </TableCell>
-                        <TableCell>
-                          <Label htmlFor="price-3" className="sr-only">
-                            Stock
-                          </Label>
-                          <Input
-                            id="price-3"
-                            type="number"
-                            defaultValue="99.99"
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <ToggleGroup
-                            type="single"
-                            defaultValue="s"
-                            variant="outline"
-                          >
-                            <ToggleGroupItem value="1">1</ToggleGroupItem>
-                            <ToggleGroupItem value="2">2</ToggleGroupItem>
-                            <ToggleGroupItem value="3">3</ToggleGroupItem>
-                          </ToggleGroup>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+                  <DataTable
+                    columns={[
+                      { title: "SKU 名称", width: 100, dataIndex: "skuName" },
+                      {
+                        title: "库存",
+                        render() {
+                          return (
+                            <Input
+                              type="number"
+                              defaultValue="99"
+                              className="h-68"
+                            />
+                          );
+                        },
+                      },
+                      {
+                        title: "价格",
+                        render() {
+                          return (
+                            <Input
+                              type="number"
+                              defaultValue="99"
+                              className="h-8"
+                            />
+                          );
+                        },
+                      },
+                      {
+                        title: "包含人数",
+                        width: 100,
+                        render(value, record, index) {
+                          return (
+                            <ToggleGroup
+                              type="single"
+                              defaultValue="s"
+                              variant="outline"
+                            >
+                              <ToggleGroupItem value="1">1</ToggleGroupItem>
+                              <ToggleGroupItem value="2">2</ToggleGroupItem>
+                              <ToggleGroupItem value="3">3</ToggleGroupItem>
+                            </ToggleGroup>
+                          );
+                        },
+                      },
+                    ]}
+                    dataSource={[
+                      {
+                        skuName: "早鸟票",
+                      },
+                      {
+                        skuName: "单人预约",
+                      },
+                      {
+                        skuName: "双人预约",
+                      },
+                      {
+                        skuName: "三人预约",
+                      },
+                    ]}
+                  />
                 </Card>
               </div>
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">

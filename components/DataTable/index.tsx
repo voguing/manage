@@ -9,6 +9,7 @@ import {
 import { Spin } from "antd";
 import clsx from "clsx";
 import dayjs from "dayjs";
+import { CSSProperties } from "react";
 
 export type DataTableProps<
   DataType extends Record<any, any> = Record<any, any>
@@ -22,6 +23,7 @@ export type DataTableProps<
     width?: number;
     valueType?: "date";
     render?: (value: any, record: DataType, index: number) => React.ReactNode;
+    style?: CSSProperties;
   }>;
 };
 
@@ -35,9 +37,25 @@ const DataTable = <DataType extends Record<any, any>>(
       <TableHeader>
         <TableRow>
           {columns.map((column, index) => {
-            const { className, dataIndex, render, title, ...rest } = column;
+            const {
+              className,
+              dataIndex,
+              render,
+              title,
+              width,
+              style,
+              ...rest
+            } = column;
             return (
-              <TableHead key={index} className={className} {...rest}>
+              <TableHead
+                key={index}
+                className={className}
+                {...rest}
+                style={{
+                  width,
+                  ...style,
+                }}
+              >
                 {title}
               </TableHead>
             );

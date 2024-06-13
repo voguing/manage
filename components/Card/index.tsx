@@ -6,6 +6,7 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
+import clsx from "clsx";
 
 export type CardProps = {
   title?: React.ReactNode;
@@ -31,15 +32,20 @@ export const Card = (props: CardProps) => {
   return (
     <ShadCard className={className}>
       {(title || description) && (
-        <CardHeader className="flex flex-row items-center">
+        <CardHeader className="flex flex-row items-center justify-between">
           <div className="grid gap-2">
             {title && <CardTitle>{title}</CardTitle>}
             {description && <CardDescription>{description}</CardDescription>}
           </div>
+          <div>{extra}</div>
         </CardHeader>
       )}
       {children && <CardContent>{children}</CardContent>}
-      {footer && <CardFooter className={footerClassName}>{footer}</CardFooter>}
+      {footer && (
+        <CardFooter className={clsx("p-0", footerClassName)}>
+          {footer}
+        </CardFooter>
+      )}
     </ShadCard>
   );
 };
