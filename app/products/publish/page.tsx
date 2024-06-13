@@ -110,7 +110,7 @@ export default function Dashboard() {
                   description="编辑商品的 SKU 信息，请在填写前确保商品类型已正确填写。"
                   extra={
                     <Button type="button" variant="ghost" size="sm">
-                      选择模版
+                      选择模版2
                     </Button>
                   }
                   footerClassName="border-t pt-2"
