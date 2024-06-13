@@ -34,6 +34,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ProFormField } from "@/app/components/ProFormField";
 import DataTable from "@/components/DataTable";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -56,6 +57,7 @@ export default function Dashboard() {
     </Button>
   );
   const currentStatus = undefined && Status.DRAFT;
+  const [dataSource, setDataSource] = useState<any[]>([]);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -109,17 +111,40 @@ export default function Dashboard() {
                   title="库存"
                   description="编辑商品的 SKU 信息，请在填写前确保商品类型已正确填写。"
                   extra={
-                    <Button type="button" variant="ghost" size="sm">
-                      选择模版2
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        setDataSource([
+                          {
+                            skuName: "早鸟票",
+                          },
+                          {
+                            skuName: "单人预约",
+                          },
+                          {
+                            skuName: "双人预约",
+                          },
+                          {
+                            skuName: "三人预约",
+                          },
+                        ])
+                      }
+                    >
+                      选择模版
                     </Button>
                   }
-                  footerClassName="border-t pt-2"
+                  footerClassName="pt-2"
                   footer={
                     <Button
                       size="sm"
                       variant="outline"
                       className="gap-1"
                       type="button"
+                      onClick={() =>
+                        setDataSource((data) => [...(data || []), {}])
+                      }
                     >
                       <PlusCircle className="h-3.5 w-3.5" />
                       添加子商品
@@ -128,7 +153,14 @@ export default function Dashboard() {
                 >
                   <DataTable
                     columns={[
-                      { title: "SKU 名称", width: 100, dataIndex: "skuName" },
+                      {
+                        title: "SKU 名称",
+                        width: 100,
+                        dataIndex: "skuName",
+                        render() {
+                          return <Input type="text" className="h-68" />;
+                        },
+                      },
                       {
                         title: "库存",
                         render() {
@@ -171,20 +203,7 @@ export default function Dashboard() {
                         },
                       },
                     ]}
-                    dataSource={[
-                      {
-                        skuName: "早鸟票",
-                      },
-                      {
-                        skuName: "单人预约",
-                      },
-                      {
-                        skuName: "双人预约",
-                      },
-                      {
-                        skuName: "三人预约",
-                      },
-                    ]}
+                    dataSource={dataSource}
                   />
                 </Card>
               </div>
@@ -229,29 +248,6 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </Card>
-                {/* <Card
-                  title="商品状态"
-                  description="展示商品状态，可点击按钮对状态进行修改"
-                >
-                  <div className="grid gap-4">
-                    <div className="grid gap-3">
-                      <Label htmlFor="status">当前状态</Label>
-                      <Select disabled>
-                        <SelectTrigger id="status">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="draft">草稿态</SelectItem>
-                          <SelectItem value="published">在售中</SelectItem>
-                          <SelectItem value="archived">已下架</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <Button size="sm" variant="secondary">
-                      下架商品
-                    </Button>
-                  </div>
-                </Card> */}
                 <Card
                   title="商品图片"
                   description="第一张图会被作为商品主图，剩下的会作为营销图展示"
@@ -259,33 +255,50 @@ export default function Dashboard() {
                   x-chunk="dashboard-07-chunk-4"
                 >
                   <div className="grid gap-2">
-                    <Image
+                    <button
+                      type="button"
+                      className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
+                    >
+                      <Upload className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                    {/* <Image
                       alt="Product image"
                       className="aspect-square w-full rounded-md object-cover"
                       height="300"
                       src="/placeholder.svg"
                       width="300"
-                    />
+                    /> */}
                     <div className="grid grid-cols-3 gap-2">
-                      <button>
-                        <Image
+                      <button
+                        type="button"
+                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
+                      >
+                        <Upload className="h-4 w-4 text-muted-foreground" />
+                        {/* <Image
                           alt="Product image"
                           className="aspect-square w-full rounded-md object-cover"
                           height="84"
                           src="/placeholder.svg"
                           width="84"
-                        />
+                        /> */}
                       </button>
-                      <button>
-                        <Image
+                      <button
+                        type="button"
+                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
+                      >
+                        <Upload className="h-4 w-4 text-muted-foreground" />
+                        {/* <Image
                           alt="Product image"
                           className="aspect-square w-full rounded-md object-cover"
                           height="84"
                           src="/placeholder.svg"
                           width="84"
-                        />
+                        /> */}
                       </button>
-                      <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                      <button
+                        type="button"
+                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
+                      >
                         <Upload className="h-4 w-4 text-muted-foreground" />
                         <span className="sr-only">Upload</span>
                       </button>
