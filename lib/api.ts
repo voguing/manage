@@ -1,14 +1,11 @@
-"use client";
-
 import { GraphQLClient, gql } from "graphql-request";
 import useSwr, { SWRResponse } from "swr";
 import { message } from "antd";
 
-const client = new GraphQLClient(`${location.origin}/graphql`);
-
 const request =
   <T = any>(api: string) =>
   async () => {
+    const client = new GraphQLClient(`${location.origin}/graphql`);
     const query = gql`
       ${api}
     `;
