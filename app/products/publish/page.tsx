@@ -12,15 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { PageContainer } from "@/app/page-container";
 import Link from "next/link";
@@ -35,6 +26,9 @@ import { z } from "zod";
 import { ProFormField } from "@/app/components/ProFormField";
 import DataTable from "@/components/DataTable";
 import { useState } from "react";
+import api from "@/lib/api";
+import { message } from "antd";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -44,6 +38,7 @@ const formSchema = z.object({
 
 export default function Dashboard() {
   const title = undefined;
+  const router = useRouter();
   const cancelButton = (
     <Link href="/products">
       <Button variant="outline" size="sm">
@@ -52,7 +47,19 @@ export default function Dashboard() {
     </Link>
   );
   const saveButton = (
-    <Button size="sm" type="submit">
+    <Button
+      size="sm"
+      type="button"
+      onClick={() =>
+        api
+          .createProduct({
+            title: "测试商品1",
+            category: "BALL",
+          })
+          .then(() => router.push("/products"))
+          .then(() => message.success("商品已保存"))
+      }
+    >
       保存商品
     </Button>
   );
