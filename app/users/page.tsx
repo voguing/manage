@@ -10,6 +10,7 @@ const Page = () => {
   useEffect(() => {
     (async () => {
       const data = await api.users();
+      console.log(data);
     })();
   }, []);
   return (
