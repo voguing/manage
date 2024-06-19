@@ -3,8 +3,16 @@
 import { PageContainer } from "@/app/page-container";
 import { DataTable } from "@/components/ReactTable";
 import { Title } from "@/components/Title";
+import api from "@/lib/api";
+import { useEffect } from "react";
 
 const Page = () => {
+  useEffect(() => {
+    (async () => {
+      const data = await api.users();
+      console.log(data);
+    })();
+  }, []);
   return (
     <PageContainer current="/users">
       <Title title="用户列表" />
