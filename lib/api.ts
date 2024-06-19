@@ -1,6 +1,5 @@
 import { GraphQLClient, gql } from "graphql-request";
-const useSwr = require("swr");
-import { SWRResponse } from "swr";
+import useSwr, { SWRResponse } from "swr";
 import { message } from "antd";
 
 const request =
