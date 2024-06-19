@@ -6,7 +6,7 @@ import { message } from "antd";
 const request =
   <T = any, P extends any = any>(api: string) =>
   async (variables?: P) => {
-    const client = new GraphQLClient(`http://localhost:3000/graphql`);
+    const client = new GraphQLClient(`${location.origin}/graphql`);
     const query = gql`
       ${api}
     `;
