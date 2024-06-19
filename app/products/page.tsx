@@ -15,7 +15,7 @@ const Page = () => {
     (async () => {
       const { data, total } = await api.getProducts({});
       setData(data);
-      console.log(data, total, data);
+      console.log(data, total, data, total);
     })();
   }, []);
 
