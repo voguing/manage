@@ -26,10 +26,10 @@ const query =
   };
 
 const api = {
+  request,
   useSwr: (apiKey: string): SWRResponse<any, any, any> => {
     return useSwr(apiKey, (api as any)[apiKey]);
   },
-  request,
   createProduct: request<any>(`
     mutation Mutation($title: String!, $category: String!) {
       createProduct(title: $title, category: $category) {
