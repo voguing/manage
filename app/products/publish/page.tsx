@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { PlusCircle, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -104,9 +103,8 @@ export default function Dashboard() {
                   description="请填写商品的基础信息，所填写的内容会展示在商品的首页。"
                 >
                   <div className="grid gap-6">
-                    <ProFormField form={form} name="name" label="商品名称" />
+                    <ProFormField name="name" label="商品名称" />
                     <ProFormField
-                      form={form}
                       name="description"
                       label="商品描述"
                       valueType="textarea"

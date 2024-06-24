@@ -12,11 +12,12 @@ import {
 import { Product, Status } from "../types";
 import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Badge, BadgeProps } from "@/components/ui/badge";
 import { ProductStatus } from "../components/ProductStatus";
 
-export const columns: ColumnDef<Product>[] = [
-  { header: "商品名称", accessorKey: "title" },
+export const columns: (ColumnDef<Product> & {
+  width?: number;
+})[] = [
+  { header: "商品名称", accessorKey: "title", width: 123 },
   { header: "分类", accessorKey: "category" },
   { header: "库存", accessorKey: "headCount" },
   { header: "已售人数", accessorKey: "soldCount" },

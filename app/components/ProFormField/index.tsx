@@ -1,3 +1,5 @@
+"use client";
+
 import {
   FormControl,
   FormDescription,
@@ -9,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ReactNode } from "react";
+import { useFormContext } from "react-hook-form";
 
 const valueTypeMap = {
   text: Input,
@@ -18,7 +21,6 @@ const valueTypeMap = {
 export type ValueTypeEnum = keyof typeof valueTypeMap;
 
 export type FormFieldProps<ValueType extends ValueTypeEnum> = {
-  form: any;
   name: string;
   label?: ReactNode;
   description?: ReactNode;
@@ -29,15 +31,9 @@ export type FormFieldProps<ValueType extends ValueTypeEnum> = {
 export const ProFormField = <ValueType extends ValueTypeEnum = "text">(
   props: FormFieldProps<ValueType>
 ) => {
-  const {
-    form,
-    name,
-    label,
-    description,
-    valueType = "text",
-    className,
-  } = props;
+  const { name, label, description, valueType = "text", className } = props;
   const Component = valueTypeMap[valueType];
+  const form = useFormContext();
 
   return (
     <FormField

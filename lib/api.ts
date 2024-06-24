@@ -31,16 +31,11 @@ const api = {
     return useSwr(apiKey, (api as any)[apiKey]);
   },
   createProduct: request<any>(`
-    mutation CreateProduct($data: ProductCreateInput!) {
-      createProduct(data: $data) {
-        id
-        title
-        description
-        image
-        status
+    mutation Mutation($title: String!, $category: String!) {
+      createProduct(title: $title, category: $category) {
         category
         createdAt
-        updatedAt
+        id
       }
     }`),
   users: query<any>(
@@ -71,10 +66,10 @@ const api = {
         createdAt
       }
     }`),
-  getProducts: query<any>(
-    "getProducts",
+  products: query<any>(
+    "products",
     `query Query($pageSize: Int, $current: Int) {
-  getProducts(pageSize: $pageSize, current: $current) {
+  products(pageSize: $pageSize, current: $current) {
     data {
       id
       title

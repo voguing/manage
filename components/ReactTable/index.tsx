@@ -74,7 +74,19 @@ export function DataTable<TData, TValue>({
   return (
     <div className={className}>
       <div className="rounded-md border">
-        <Table>
+        <Table className="min-w-max">
+          <colgroup>
+            {table.getHeaderGroups().map((headerGroup) =>
+              headerGroup.headers.map((header: any) => {
+                return (
+                  <col
+                    key={header.id}
+                    style={{ width: header.column.columnDef.width }}
+                  />
+                );
+              })
+            )}
+          </colgroup>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
