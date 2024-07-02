@@ -9,7 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
@@ -19,7 +18,6 @@ const Page = () => {
     <PageContainer current="/orders">
       <Title title="订单管理" />
       <DataTable
-        className="mt-4"
         data={[{}]}
         columns={[
           // paymentNo?: string;

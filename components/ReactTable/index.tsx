@@ -16,8 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "../ui/checkbox";
 import { useState } from "react";
+import { Checkbox } from "../ui/checkbox";
 import { DataTablePagination } from "./components/Pagination";
 
 interface DataTableProps<TData, TValue> {

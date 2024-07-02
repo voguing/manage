@@ -1,8 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
 import {
-  Home,
-  LineChart,
   MessageCircle,
   Package,
   Package2,
@@ -11,7 +7,9 @@ import {
   ShoppingCart,
   Users2,
 } from "lucide-react";
+import Link from "next/link";
 
+import { Title } from "@/components/Title";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -107,11 +105,13 @@ const routeMapper: Record<
 export const PageContainer = ({
   children,
   current,
-  type,
+  title,
+  extra,
 }: {
   children?: React.ReactNode;
   current: string;
-  type?: "default" | "publish";
+  title?: React.ReactNode;
+  extra?: React.ReactNode;
 }) => {
   const currentRoute = routeMapper[current];
   const breadcrumbs = currentRoute?.parent ? (
@@ -259,7 +259,12 @@ export const PageContainer = ({
             )}
           >
             {breadcrumbs}
-            <div>{children}</div>
+            <div>
+              <div className="flex gap-4 flex-col">
+                {(title || extra) && <Title title={title} extra={extra} />}
+                {children}
+              </div>
+            </div>
           </main>
         </div>
       </div>

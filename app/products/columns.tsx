@@ -14,10 +14,14 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ProductStatus } from "../components/ProductStatus";
 import { Product, Status } from "../types";
 
-const formatter = Intl.NumberFormat("zh-CN", {
+const numberFormatter = Intl.NumberFormat("zh-CN", {
   currency: "CNY",
   style: "currency",
   currencyDisplay: "symbol",
+});
+const dateFormatter = Intl.DateTimeFormat("zh-CN", {
+  dateStyle: "medium",
+  timeStyle: "medium",
 });
 
 export const columns: (ColumnDef<Product> & {
@@ -30,9 +34,14 @@ export const columns: (ColumnDef<Product> & {
   {
     header: "价格",
     accessorKey: "price",
-    accessorFn: (row) => formatter.formatRange(row.minPrice, row.maxPrice),
+    accessorFn: (row) =>
+      numberFormatter.formatRange(row.minPrice, row.maxPrice),
   },
-  { header: "创建时间", accessorKey: "createdAt" },
+  {
+    header: "创建时间",
+    accessorKey: "createdAt",
+    accessorFn: (row) => dateFormatter.format(new Date(row.createdAt)),
+  },
   {
     header: "状态",
     accessorKey: "status",

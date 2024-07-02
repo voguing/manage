@@ -19,7 +19,6 @@ const Page = () => {
     <PageContainer current="/notice">
       <Title title="触达中心" />
       <DataTable
-        className="mt-4"
         data={[{}]}
         columns={[
           // id: number;

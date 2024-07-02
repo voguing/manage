@@ -1,5 +1,5 @@
-import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -21,14 +21,12 @@ export const Title = (props: TitleProps) => {
           </Button>
         </Link>
       )}
-      <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
+      <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight">
         {title}
       </h1>
       {titleAfter}
       {extra && (
-        <div className="hidden items-center gap-2 md:ml-auto md:flex">
-          {extra}
-        </div>
+        <div className="items-center gap-2 md:ml-auto flex">{extra}</div>
       )}
     </div>
   );

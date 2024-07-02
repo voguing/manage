@@ -17,8 +17,6 @@ const Page = () => {
     <PageContainer current="/users">
       <Title title="用户列表" />
       <DataTable
-        // api="users"
-        className="mt-4"
         data={[
           {
             id: 1,
