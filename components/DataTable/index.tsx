@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Spin } from "antd";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { CSSProperties } from "react";
@@ -25,12 +24,14 @@ export type DataTableProps<
     render?: (value: any, record: DataType, index: number) => React.ReactNode;
     style?: CSSProperties;
   }>;
+  rowKey?: string;
 };
 
 const DataTable = <DataType extends Record<any, any>>(
   props: DataTableProps<DataType>
 ) => {
-  const { columns = [], dataSource = [], loading } = props;
+  const { columns = [], dataSource = [], loading, rowKey } = props;
+  console.log(dataSource, "dataSource");
 
   const table = (
     <Table>
@@ -63,10 +64,11 @@ const DataTable = <DataType extends Record<any, any>>(
         </TableRow>
       </TableHeader>
       <TableBody>
-        {dataSource.map((record, index) => {
+        {dataSource.map((record, rowIndex) => {
+          console.log(rowKey ? record[rowKey] ?? rowIndex : rowIndex);
           return (
-            <TableRow key={index}>
-              {columns.map((column, index) => {
+            <TableRow key={rowKey ? record[rowKey] ?? rowIndex : rowIndex}>
+              {columns.map((column, colIndex) => {
                 const {
                   dataIndex,
                   render,
@@ -82,13 +84,15 @@ const DataTable = <DataType extends Record<any, any>>(
                 }
                 return (
                   <TableCell
-                    key={index}
+                    key={`${rowKey ? record[rowKey] ?? rowIndex : rowIndex}-${
+                      dataIndex ?? colIndex
+                    }`}
                     className={clsx(className, "min-w-[100px]")}
                     {...rest}
                   >
                     <div>
                       {render
-                        ? render(value, record, index)
+                        ? render(value, record, colIndex)
                         : (renderValue ?? value) || "-"}
                     </div>
                   </TableCell>

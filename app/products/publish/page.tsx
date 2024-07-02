@@ -1,39 +1,41 @@
 "use client";
 
-import { PlusCircle, Upload } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select as UISelect,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ProductStatus } from "@/app/components/ProductStatus";
 import { PageContainer } from "@/app/page-container";
-import Link from "next/link";
+import { Status } from "@/app/types";
 import { Card } from "@/components/Card";
 import { Title } from "@/components/Title";
-import { ProductStatus } from "@/app/components/ProductStatus";
-import { Status } from "@/app/types";
-import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { ProFormField } from "@/app/components/ProFormField";
-import DataTable from "@/components/DataTable";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import api from "@/lib/api";
-import { message } from "antd";
+import {
+  EditableProTable,
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
+} from "@ant-design/pro-components";
+import { Form, Space, message } from "antd";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "名称至少包含两个汉字",
-  }),
-});
+// const formSchema = z.object({
+//   title: z.string().min(2, {
+//     message: "名称至少包含两个汉字",
+//   }),
+//   description: z.string().optional(),
+//   image: z.string().optional(),
+//   status: z.nativeEnum(Status),
+//   category: z.nativeEnum({ BALL: "BALL" }),
+//   skus: z.array(
+//     z.object({
+//       price: z.string(),
+//       stock: z.number(),
+//       hc: z.number(),
+//       name: z.string(),
+//     })
+//   ),
+// });
 
 export default function Dashboard() {
   const title = undefined;
@@ -46,281 +48,181 @@ export default function Dashboard() {
     </Link>
   );
   const saveButton = (
-    <Button
-      size="sm"
-      type="button"
-      onClick={() =>
-        api
-          .createProduct({
-            title: "测试商品1",
-            category: "BALL",
-          })
-          .then(() => router.push("/products"))
-          .then(() => message.success("商品已保存"))
-      }
-    >
+    <Button size="sm" type="submit" onClick={onSubmit}>
       保存商品
     </Button>
   );
   const currentStatus = undefined && Status.DRAFT;
   const [dataSource, setDataSource] = useState<any[]>([]);
 
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-    },
-  });
-
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    const result = await form.validateFields();
+    console.log(result);
+
+    api
+      .createProduct(result)
+      .then(() => router.push("/products"))
+      .then(() => message.success("商品已保存"));
   }
+  const [form] = Form.useForm();
+  const initiated = useRef(false);
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
+
+  useEffect(() => {
+    if (!initiated.current) {
+      initiated.current = true;
+      return;
+    }
+
+    form.setFieldsValue({
+      title: "测试商品名称",
+      description: "测试商品描述",
+      category: "BALL",
+      skus: [
+        {
+          id: Math.random().toString(36).slice(2),
+          stock: 100,
+          price: 200,
+          hc: 1,
+          name: "单人票",
+        },
+        {
+          id: Math.random().toString(36).slice(2),
+          stock: 40,
+          price: 380,
+          hc: 2,
+          name: "双人票",
+        },
+      ],
+    });
+    setEditableRowKeys(form.getFieldValue("skus").map((item: any) => item.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <PageContainer current="/products/publish" type="publish">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid flex-1 gap-4 auto-rows-max">
-            <Title
-              title="发布商品"
-              backUrl="/products"
-              titleAfter={<ProductStatus value={currentStatus} />}
-              extra={
-                <>
-                  {cancelButton}
-                  {saveButton}
-                </>
-              }
-            />
-            <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
-              <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                <Card
-                  title="商品详情"
-                  description="请填写商品的基础信息，所填写的内容会展示在商品的首页。"
-                >
-                  <div className="grid gap-6">
-                    <ProFormField name="name" label="商品名称" />
-                    <ProFormField
-                      name="description"
-                      label="商品描述"
-                      valueType="textarea"
-                      className="min-h-32"
-                    />
-                  </div>
-                </Card>
-                <Card
-                  title="库存"
-                  description="编辑商品的 SKU 信息，请在填写前确保商品类型已正确填写。"
-                  extra={
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() =>
-                        setDataSource([
-                          {
-                            skuName: "早鸟票",
-                          },
-                          {
-                            skuName: "单人预约",
-                          },
-                          {
-                            skuName: "双人预约",
-                          },
-                          {
-                            skuName: "三人预约",
-                          },
-                        ])
-                      }
-                    >
-                      选择模版
-                    </Button>
-                  }
-                  footerClassName="pt-2"
-                  footer={
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="gap-1"
-                      type="button"
-                      onClick={() =>
-                        setDataSource((data) => [...(data || []), {}])
-                      }
-                    >
-                      <PlusCircle className="h-3.5 w-3.5" />
-                      添加子商品
-                    </Button>
-                  }
-                >
-                  <DataTable
-                    columns={[
-                      {
-                        title: "SKU 名称",
-                        width: 100,
-                        dataIndex: "skuName",
-                        render() {
-                          return <Input type="text" className="h-68" />;
-                        },
-                      },
-                      {
-                        title: "库存",
-                        render() {
-                          return (
-                            <Input
-                              type="number"
-                              defaultValue="99"
-                              className="h-68"
-                            />
-                          );
-                        },
-                      },
-                      {
-                        title: "价格",
-                        render() {
-                          return (
-                            <Input
-                              type="number"
-                              defaultValue="99"
-                              className="h-8"
-                            />
-                          );
-                        },
-                      },
-                      {
-                        title: "包含人数",
-                        width: 100,
-                        render(value, record, index) {
-                          return (
-                            <ToggleGroup
-                              type="single"
-                              defaultValue="s"
-                              variant="outline"
-                            >
-                              <ToggleGroupItem value="1">1</ToggleGroupItem>
-                              <ToggleGroupItem value="2">2</ToggleGroupItem>
-                              <ToggleGroupItem value="3">3</ToggleGroupItem>
-                            </ToggleGroup>
-                          );
-                        },
-                      },
-                    ]}
-                    dataSource={dataSource}
-                  />
-                </Card>
-              </div>
-              <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                <Card
-                  title="商品分类"
-                  description="商品分类会影响商品在前台的展示，请确保填写正确。"
-                >
-                  <div className="grid gap-6">
-                    <div className="grid gap-3">
-                      <Label htmlFor="category">分类</Label>
-                      <UISelect value="clothing">
-                        <SelectTrigger
-                          id="category"
-                          aria-label="Select category"
-                        >
-                          <SelectValue placeholder="请选择" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="clothing">舞会</SelectItem>
-                          <SelectItem value="electronics" disabled>
-                            酒水
-                          </SelectItem>
-                          <SelectItem value="course" disabled>
-                            课程
-                          </SelectItem>
-                        </SelectContent>
-                      </UISelect>
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="subcategory">子分类（可选）</Label>
-                      <UISelect>
-                        <SelectTrigger id="subcategory">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="t-shirtsa">Major Ball</SelectItem>
-                          <SelectItem value="t-shirts">Kiki Ball</SelectItem>
-                          <SelectItem value="sweatshirts">Kiki</SelectItem>
-                        </SelectContent>
-                      </UISelect>
-                    </div>
-                  </div>
-                </Card>
-                <Card
-                  title="商品图片"
-                  description="第一张图会被作为商品主图，剩下的会作为营销图展示"
-                  className="overflow-hidden"
-                  x-chunk="dashboard-07-chunk-4"
-                >
-                  <div className="grid gap-2">
-                    <button
-                      type="button"
-                      className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
-                    >
-                      <Upload className="h-4 w-4 text-muted-foreground" />
-                    </button>
-                    {/* <Image
-                      alt="Product image"
-                      className="aspect-square w-full rounded-md object-cover"
-                      height="300"
-                      src="/placeholder.svg"
-                      width="300"
-                    /> */}
-                    <div className="grid grid-cols-3 gap-2">
-                      <button
-                        type="button"
-                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
-                      >
-                        <Upload className="h-4 w-4 text-muted-foreground" />
-                        {/* <Image
-                          alt="Product image"
-                          className="aspect-square w-full rounded-md object-cover"
-                          height="84"
-                          src="/placeholder.svg"
-                          width="84"
-                        /> */}
-                      </button>
-                      <button
-                        type="button"
-                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
-                      >
-                        <Upload className="h-4 w-4 text-muted-foreground" />
-                        {/* <Image
-                          alt="Product image"
-                          className="aspect-square w-full rounded-md object-cover"
-                          height="84"
-                          src="/placeholder.svg"
-                          width="84"
-                        /> */}
-                      </button>
-                      <button
-                        type="button"
-                        className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed"
-                      >
-                        <Upload className="h-4 w-4 text-muted-foreground" />
-                        <span className="sr-only">Upload</span>
-                      </button>
-                    </div>
-                  </div>
-                </Card>
-              </div>
-            </div>
-            <Card className="md:hidden">
-              <div className="flex items-center justify-center gap-2">
-                {cancelButton}
-                {saveButton}
-              </div>
+      <div className="grid flex-1 gap-4 auto-rows-max">
+        <Title
+          title="发布商品"
+          backUrl="/products"
+          titleAfter={<ProductStatus value={currentStatus} />}
+          extra={
+            <>
+              {cancelButton}
+              {saveButton}
+            </>
+          }
+        />
+        <ProForm form={form} submitter={false}>
+          <Space direction="vertical" className="w-full" size="middle">
+            <Card>
+              <ProFormText required label="商品名称" name="title" width="lg" />
+              <ProFormTextArea
+                required
+                label="商品描述"
+                name="description"
+                width="lg"
+                fieldProps={{
+                  rows: 4,
+                }}
+              />
+              <ProFormSelect
+                required
+                width="lg"
+                options={[{ label: "BALL", value: "BALL" }]}
+                label="商品分类"
+                name="category"
+              />
             </Card>
-          </div>
-        </form>
-      </Form>
+            <Card>
+              <EditableProTable
+                scroll={{ x: true }}
+                name="skus"
+                rowKey="id"
+                recordCreatorProps={{
+                  record(index, dataSource) {
+                    return {
+                      id: Math.random().toString(36).slice(2),
+                      stock: 1,
+                      price: 1,
+                      hc: 1,
+                    };
+                  },
+                }}
+                editable={{
+                  type: "multiple",
+                  editableKeys,
+                  onChange(editableKeys) {
+                    setEditableRowKeys(editableKeys);
+                  },
+                  // editableKeys: form
+                  //   .getFieldValue("skus")
+                  //   ?.map((item: any) => item.id),
+                }}
+                columns={[
+                  {
+                    title: "SKU 名称",
+                    dataIndex: "name",
+                    width: "40%",
+                    formItemProps: { required: true },
+                  },
+                  {
+                    title: "库存",
+                    dataIndex: "stock",
+                    formItemProps: { required: true },
+                    valueType: "digit",
+                    width: "20%",
+                    fieldProps: {
+                      style: {
+                        width: "100%",
+                      },
+                    },
+                  },
+                  {
+                    title: "价格",
+                    dataIndex: "price",
+                    formItemProps: { required: true },
+                    valueType: "digit",
+                    width: "20%",
+                    fieldProps: {
+                      style: {
+                        width: "100%",
+                      },
+                    },
+                  },
+                  {
+                    title: "人数",
+                    dataIndex: "hc",
+                    formItemProps: { required: true },
+                    valueType: "digit",
+                    width: "20%",
+                    fieldProps: {
+                      style: {
+                        width: "100%",
+                      },
+                    },
+                  },
+                ]}
+              />
+              {/* <ProFormList
+                name="skus"
+                itemRender={({ action, listDom }) => {
+                  return listDom;
+                }}
+              >
+                <Space size="middle">
+                  <ProFormText label="SKU 名称" name="name" />
+                  <ProFormDigit name="stock" />
+                  <ProFormDigit name="price" />
+                </Space>
+              </ProFormList> */}
+            </Card>
+          </Space>
+        </ProForm>
+      </div>
     </PageContainer>
   );
 }
