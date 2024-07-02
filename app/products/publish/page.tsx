@@ -60,10 +60,16 @@ export default function Dashboard() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     const result = await form.validateFields();
-    console.log(result);
 
     api
-      .createProduct(result)
+      .createProduct({
+        ...result,
+        skus: result.skus.map((item: any) => ({
+          ...item,
+          price: parseInt(item.price) * 100,
+          id: undefined,
+        })),
+      })
       .then(() => router.push("/products"))
       .then(() => message.success("商品已保存"));
   }

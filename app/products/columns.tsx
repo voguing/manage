@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,19 +9,30 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Product, Status } from "../types";
-import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ColumnDef } from "@tanstack/react-table";
 import { ProductStatus } from "../components/ProductStatus";
+import { Product, Status } from "../types";
+
+const formatter = Intl.NumberFormat("zh-CN", {
+  currency: "CNY",
+  style: "currency",
+  currencyDisplay: "symbol",
+});
 
 export const columns: (ColumnDef<Product> & {
   width?: number;
 })[] = [
   { header: "商品名称", accessorKey: "title", width: 123 },
   { header: "分类", accessorKey: "category" },
-  { header: "库存", accessorKey: "headCount" },
-  { header: "已售人数", accessorKey: "soldCount" },
-  { header: "价格", accessorKey: "price" },
+  { header: "库存", accessorKey: "stock" },
+  { header: "已售人数", accessorKey: "soldHc" },
+  {
+    header: "价格",
+    accessorKey: "price",
+    accessorFn: (row) => formatter.formatRange(row.minPrice, row.maxPrice),
+  },
+  { header: "创建时间", accessorKey: "createdAt" },
   {
     header: "状态",
     accessorKey: "status",
@@ -31,7 +42,6 @@ export const columns: (ColumnDef<Product> & {
       return <ProductStatus value={value} />;
     },
   },
-  { header: "创建时间", accessorKey: "createdAt" },
   {
     header: "操作",
     cell: ({ row }) => {

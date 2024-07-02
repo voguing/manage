@@ -70,7 +70,8 @@ export type Product = {
   createdAt: string;
   updatedAt: string;
   skus: Sku[];
-  price: string;
+  minPrice: number;
+  maxPrice: number;
   headCount: number;
   soldCount: number;
 };

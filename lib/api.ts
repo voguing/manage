@@ -1,6 +1,6 @@
+import { message } from "antd";
 import { GraphQLClient, gql } from "graphql-request";
 import useSwr, { SWRResponse } from "swr";
-import { message } from "antd";
 
 const request =
   <T = any, P extends any = any>(api: string) =>
@@ -31,8 +31,8 @@ const api = {
     return useSwr(apiKey, (api as any)[apiKey]);
   },
   createProduct: request<any>(`
-    mutation Mutation($title: String!, $category: String!) {
-      createProduct(title: $title, category: $category) {
+    mutation Mutation($title: String!, $category: String!, $skus: [SkuCreateInput!]!) {
+      createProduct(title: $title, category: $category, skus: $skus) {
         category
         createdAt
         id
@@ -41,7 +41,7 @@ const api = {
   users: query<any>(
     "users",
     `
-    query {
+    query users {
       users {
         data {
           id
@@ -69,20 +69,24 @@ const api = {
   products: query<any>(
     "products",
     `query Query($pageSize: Int, $current: Int) {
-  products(pageSize: $pageSize, current: $current) {
-    data {
-      id
-      title
-      description
-      image
-      status
-      category
-      createdAt
-      updatedAt
-    }
-    total
-  }
-}`
+      products(pageSize: $pageSize, current: $current) {
+        data {
+          id
+          title
+          description
+          image
+          stock
+          minPrice
+          maxPrice
+          soldHc
+          status
+          category
+          createdAt
+          updatedAt
+        }
+        total
+      }
+    }`
   ),
 };
 
