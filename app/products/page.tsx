@@ -9,7 +9,7 @@ import { columns } from "./columns";
 const Page = async () => {
   const {
     products: { data },
-  } = await server.products();
+  } = await server.products().catch(() => ({ products: { data: [] } }));
   return (
     <PageContainer
       current="/products"
