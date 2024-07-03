@@ -25,18 +25,6 @@ const Page = async () => {
       <DataTable columns={columns} data={data} />
     </PageContainer>
   );
-  // const [data, setData] = useState<any[]>([]);
-  // useEffect(() => {
-  //   (async () => {
-  //     const { data, total } = await api.products({});
-  //     setData(data);
-  //     console.log(data, total, data);
-  //   })();
-  // }, []);
-
-  // return (
-
-  // );
 };
 
 export default Page;
