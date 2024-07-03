@@ -112,6 +112,7 @@ export const PageContainer = ({
   current: string;
   title?: React.ReactNode;
   extra?: React.ReactNode;
+  type?: string;
 }) => {
   const currentRoute = routeMapper[current];
   const breadcrumbs = currentRoute?.parent ? (
