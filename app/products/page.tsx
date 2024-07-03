@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { columns } from "./columns";
 
+export const dynamic = "force-dynamic";
+
 const Page = async () => {
   const {
     products: { data },
