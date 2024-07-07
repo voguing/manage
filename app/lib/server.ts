@@ -1,4 +1,4 @@
-import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
+import { gql, GraphQLClient } from "graphql-request";
 
 export const dynamic = "force-dynamic";
 
@@ -88,31 +88,35 @@ const GET_USERS = gql`
   }
 `;
 
-const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache(),
-  ssrMode: true,
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: "no-cache", // 对于watchQuery，不使用缓存
-    },
-    query: {
-      fetchPolicy: "no-cache", // 对于query，不使用缓存
-      errorPolicy: "all",
-    },
-    mutate: {
-      fetchPolicy: "no-cache", // 对于mutate，不使用缓存
-    },
-  },
-});
+const client = new GraphQLClient(
+  "http://localhost:4000/graphql",
+  {
+    cache: "no-store",
+  }
+  // {
+  // uri: "http://localhost:4000/graphql",
+  // cache: new InMemoryCache(),
+  // ssrMode: true,
+  // defaultOptions: {
+  //   watchQuery: {
+  //     fetchPolicy: "no-cache", // 对于watchQuery，不使用缓存
+  //   },
+  //   query: {
+  //     fetchPolicy: "no-cache", // 对于query，不使用缓存
+  //     errorPolicy: "all",
+  //   },
+  //   mutate: {
+  //     fetchPolicy: "no-cache", // 对于mutate，不使用缓存
+  //   },
+  // },
+  // }
+);
 
 const generateQuery = (name: string, query: any) => {
   return () =>
     client
-      .query({
-        query,
-      })
-      .then(({ data }) => {
+      .request(query)
+      .then((data: any) => {
         const result = data?.[name];
         return result;
       })

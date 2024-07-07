@@ -1,9 +1,9 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Product } from "../types";
+import Image from "next/image";
 
-export const columns: (ColumnDef<Product> & {
+export const columns: (ColumnDef<any> & {
   width?: number;
 })[] = [
   {
@@ -13,6 +13,20 @@ export const columns: (ColumnDef<Product> & {
   {
     header: "头像",
     accessorKey: "avatar",
+    cell: (props) => {
+      const avatar = props.getValue<any>();
+      return (
+        <Image
+          width={30}
+          height={30}
+          src={avatar}
+          alt="avatar"
+          style={{
+            borderRadius: 4,
+          }}
+        />
+      );
+    },
   },
   {
     header: "姓名",

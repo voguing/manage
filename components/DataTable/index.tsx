@@ -31,7 +31,6 @@ const DataTable = <DataType extends Record<any, any>>(
   props: DataTableProps<DataType>
 ) => {
   const { columns = [], dataSource = [], loading, rowKey } = props;
-  console.log(dataSource, "dataSource");
 
   const table = (
     <Table>
@@ -65,7 +64,6 @@ const DataTable = <DataType extends Record<any, any>>(
       </TableHeader>
       <TableBody>
         {dataSource.map((record, rowIndex) => {
-          console.log(rowKey ? record[rowKey] ?? rowIndex : rowIndex);
           return (
             <TableRow key={rowKey ? record[rowKey] ?? rowIndex : rowIndex}>
               {columns.map((column, colIndex) => {
