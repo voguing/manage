@@ -9,9 +9,7 @@ import { columns } from "./columns";
 export const dynamic = "force-dynamic";
 
 const Page = async () => {
-  const {
-    products: { data },
-  } = await server.products().catch(() => ({ products: { data: [] } }));
+  const { data } = await server.products();
   return (
     <PageContainer
       current="/products"
