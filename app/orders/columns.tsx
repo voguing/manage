@@ -29,11 +29,7 @@ export const columns: (ColumnDef<Product> & {
   },
   {
     header: "用户",
-    accessorKey: "userId",
-  },
-  {
-    header: "创建时间",
-    accessorKey: "createdAt",
+    accessorKey: "user.username",
   },
   {
     header: "商品名称",
@@ -42,6 +38,10 @@ export const columns: (ColumnDef<Product> & {
   {
     header: "sku 名称",
     accessorKey: "sku.name",
+  },
+  {
+    header: "创建时间",
+    accessorKey: "createdAt",
   },
   {
     header: "操作",

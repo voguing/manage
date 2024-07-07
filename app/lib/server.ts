@@ -25,7 +25,7 @@ const GET_PRODUCTS = gql`
 `;
 
 const GET_ORDERS = gql`
-  query orders {
+  query Orders {
     orders {
       data {
         id
@@ -55,6 +55,15 @@ const GET_ORDERS = gql`
           category
           createdAt
           updatedAt
+        }
+        user {
+          id
+          name
+          username
+          phone
+          avatar
+          openid
+          createdAt
         }
       }
       total
@@ -89,6 +98,7 @@ const client = new ApolloClient({
     },
     query: {
       fetchPolicy: "no-cache", // 对于query，不使用缓存
+      errorPolicy: "all",
     },
     mutate: {
       fetchPolicy: "no-cache", // 对于mutate，不使用缓存
@@ -104,10 +114,12 @@ const generateQuery = (name: string, query: any) => {
       })
       .then(({ data }) => {
         const result = data?.[name];
-        console.log(result.data);
         return result;
       })
-      .catch(() => ({ [name]: { data: [], total: 0 } }));
+      .catch((e) => {
+        return Promise.reject(e);
+      });
+  // .catch(() => ({ [name]: { data: [], total: 0 } }));
 };
 
 export const server = {
