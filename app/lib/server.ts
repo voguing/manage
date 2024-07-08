@@ -89,7 +89,7 @@ const GET_USERS = gql`
 `;
 
 const client = new GraphQLClient(
-  "http://localhost:4000/graphql",
+  "http://voguexus:4000/graphql",
   {
     cache: "no-store",
   }
