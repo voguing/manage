@@ -13,7 +13,7 @@ const Page = async () => {
   return (
     <PageContainer
       current="/products"
-      title="商品列表"
+      title="商品列表 test"
       extra={
         <Link href="/products/publish">
           <Button size="sm">发布商品</Button>
