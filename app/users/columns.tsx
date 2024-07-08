@@ -16,15 +16,17 @@ export const columns: (ColumnDef<any> & {
     cell: (props) => {
       const avatar = props.getValue<any>();
       return (
-        <Image
-          width={30}
-          height={30}
-          src={avatar}
-          alt="avatar"
-          style={{
-            borderRadius: 4,
-          }}
-        />
+        avatar && (
+          <Image
+            width={30}
+            height={30}
+            src={avatar}
+            alt="avatar"
+            style={{
+              borderRadius: 4,
+            }}
+          />
+        )
       );
     },
   },

@@ -20,14 +20,6 @@ export const columns: (ColumnDef<Product> & {
     accessorKey: "orderNo",
   },
   {
-    header: "付款编号",
-    accessorKey: "paymentNo",
-  },
-  {
-    header: "订单状态",
-    accessorKey: "status",
-  },
-  {
     header: "用户",
     accessorKey: "user.username",
   },
@@ -42,6 +34,14 @@ export const columns: (ColumnDef<Product> & {
   {
     header: "创建时间",
     accessorKey: "createdAt",
+  },
+  {
+    header: "付款编号",
+    accessorKey: "paymentNo",
+  },
+  {
+    header: "订单状态",
+    accessorKey: "status",
   },
   {
     header: "操作",
