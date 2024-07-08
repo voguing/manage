@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Card } from "../Card";
 import DataTable, { DataTableProps } from "../DataTable";
 import { Pagination } from "../Pagination";
-import api from "@/lib/api";
+import api from "../../app/lib/api";
 
 export type QueryTableProps = DataTableProps & {
   api: string;

@@ -6,7 +6,7 @@ import { Status } from "@/app/types";
 import { Card } from "@/components/Card";
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
-import api from "@/lib/api";
+import api from "../../lib/api";
 import {
   EditableProTable,
   ProForm,

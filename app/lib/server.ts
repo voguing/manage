@@ -93,23 +93,6 @@ const client = new GraphQLClient(
   {
     cache: "no-store",
   }
-  // {
-  // uri: "http://localhost:4000/graphql",
-  // cache: new InMemoryCache(),
-  // ssrMode: true,
-  // defaultOptions: {
-  //   watchQuery: {
-  //     fetchPolicy: "no-cache", // 对于watchQuery，不使用缓存
-  //   },
-  //   query: {
-  //     fetchPolicy: "no-cache", // 对于query，不使用缓存
-  //     errorPolicy: "all",
-  //   },
-  //   mutate: {
-  //     fetchPolicy: "no-cache", // 对于mutate，不使用缓存
-  //   },
-  // },
-  // }
 );
 
 const generateQuery = (name: string, query: any) => {

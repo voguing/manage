@@ -1,0 +1,24 @@
+FROM --platform=linux/arm64 node:20
+
+RUN mkdir /app
+WORKDIR /app
+ENV TZ="Asia/Shanghai"
+
+EXPOSE 3000
+
+ENV PORT 3000
+
+COPY package.json pnpm-lock.yaml ./
+
+COPY next.config.mjs tsconfig.json ./
+COPY tailwind.config.ts postcss.config.mjs ./
+
+RUN npm config --global set registry https://registry.npmmirror.com
+RUN npm i -g pnpm
+RUN pnpm i
+
+COPY . .
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+CMD npm run dev

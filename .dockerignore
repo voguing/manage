@@ -1,7 +1,12 @@
-Dockerfile
-.dockerignore
+.github
+.idea
+.next
 node_modules
+.dockerignore
+.env
+.gitignore
+.gitpod.yml
+Dockerfile
 npm-debug.log
 README.md
-.next
 .git
