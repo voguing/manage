@@ -14,7 +14,7 @@ env:
 
 jobs:
   build:
-    uses: velkinto/voguexus/.github/workflows/docker.yml@main
+    uses: velkinto/voguexus/.github/workflows/docker.yml
 
     # runs-on: ubuntu-latest
     
