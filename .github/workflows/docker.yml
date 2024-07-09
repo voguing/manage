@@ -14,7 +14,9 @@ env:
 
 jobs:
   build:
-    uses: velkinto/voguexus/.github/workflows/docker.yml@main
+    uses: voguing/actions/.github/workflows/main.yml@main
+    with:
+      name: "manage"
 
     # runs-on: ubuntu-latest
     # steps:
@@ -22,4 +24,3 @@ jobs:
 
     #   - name: 登录至阿里云容器镜像服务
     #     run: docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
-
