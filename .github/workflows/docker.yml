@@ -22,7 +22,4 @@ jobs:
       - name: 登录至阿里云容器镜像服务
         run: docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
 
-      - name: 构建容器镜像
-        run: |
-          image_name=$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/voguext:latest
-          docker build . --file Dockerfile --tag $image_name && docker push $image_name
+      - uses: velkinto/voguexus/.github/workflows/docker.yml@main
