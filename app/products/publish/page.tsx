@@ -6,7 +6,6 @@ import { Status } from "@/app/types";
 import { Card } from "@/components/Card";
 import { Title } from "@/components/Title";
 import { Button } from "@/components/ui/button";
-import api from "../../lib/api";
 import {
   EditableProTable,
   ProForm,
@@ -18,6 +17,7 @@ import { Form, Space, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import api from "../../lib/api";
 
 // const formSchema = z.object({
 //   title: z.string().min(2, {
@@ -76,13 +76,7 @@ export default function Dashboard() {
   const [form] = Form.useForm();
   const initiated = useRef(false);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-
-  useEffect(() => {
-    if (!initiated.current) {
-      initiated.current = true;
-      return;
-    }
-
+  const setInitialValues = () => {
     form.setFieldsValue({
       title: "测试商品名称",
       description: "测试商品描述",
@@ -105,6 +99,15 @@ export default function Dashboard() {
       ],
     });
     setEditableRowKeys(form.getFieldValue("skus").map((item: any) => item.id));
+  };
+
+  useEffect(() => {
+    if (!initiated.current) {
+      initiated.current = true;
+      return;
+    }
+
+    setInitialValues();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -117,6 +120,15 @@ export default function Dashboard() {
           titleAfter={<ProductStatus value={currentStatus} />}
           extra={
             <>
+              {
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setInitialValues()}
+                >
+                  设置值
+                </Button>
+              }
               {cancelButton}
               {saveButton}
             </>
