@@ -14,12 +14,12 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    uses: velkinto/voguexus/.github/workflows/docker.yml@main
+    # runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+    # steps:
+    #   - uses: actions/checkout@v4
 
-      - name: 登录至阿里云容器镜像服务
-        run: docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
+    #   - name: 登录至阿里云容器镜像服务
+    #     run: docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
 
-      - uses: velkinto/voguexus/.github/workflows/docker.yml@main
