@@ -1,10 +1,10 @@
 import {
-  Card as ShadCard,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  CardFooter,
+  Card as ShadCard,
 } from "@/components/ui/card";
 import clsx from "clsx";
 
