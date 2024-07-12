@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "vogue.oss-cn-hangzhou.aliyuncs.com",
+        hostname: "cdn.vogueit.cn",
       },
     ],
   },
