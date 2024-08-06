@@ -31,6 +31,14 @@ export const columns: (ColumnDef<any> & {
     },
   },
   {
+    header: "电话",
+    accessorKey: "phone",
+  },
+  {
+    header: "微信ID",
+    accessorKey: "openid",
+  },
+  {
     header: "姓名",
     accessorKey: "name",
   },
@@ -39,15 +47,7 @@ export const columns: (ColumnDef<any> & {
     accessorKey: "username",
   },
   {
-    header: "电话",
-    accessorKey: "phone",
-  },
-  {
     header: "注册时间",
     accessorKey: "createdAt",
-  },
-  {
-    header: "微信ID",
-    accessorKey: "openid",
   },
 ];
